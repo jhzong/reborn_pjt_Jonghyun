@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% comment %} css 작업은 여기서 하세요!! {% endcomment %}
+{% block css %}
+<link rel='stylesheet' href="/static/css/resview.css">
+{% endblock css %}
+
+{% comment %} script 작업은 여기서 하세요!! {% endcomment %}
+{% block script %}
+<link rel='stylesheet' href="/static/js/restaurants.js">
+{% endblock script %}
+
+{% comment %} body 작업은 여기서 하세요!! {% endcomment %}
+{% block body %}
+<div class="container">
+
+    <!-- 상단 이미지 영역 -->
+    <section class="image-section">
+        <div class="image-main">
+            <img src="https://picsum.photos/600/400" alt="대표 이미지">
+        </div>
+        <div class="image-sub">
+            <img src="https://picsum.photos/200/130">
+            <img src="https://picsum.photos/200/130">
+            <img src="https://picsum.photos/200/130">
+        </div>
+    </section>
+
+    <!-- 메인 정보 -->
+    <section class="content-section">
+        <!-- 왼쪽 -->
+        <div class="left">
+            <h1 class="restaurant-name">부산집 Pork</h1>
+
+            <p class="description">
+                신선한 고기와 정성스러운 조리로 사랑받는 고깃집입니다.
+            </p>
+
+            <h2>메뉴</h2>
+            {% comment %} 메뉴 정보를 Django에서 전달받아 표시{% for menu in menus %} {% endcomment %}
+            <ul class="menu-list">
+                <li>
+                    <span>삼겹살</span>
+                    <span>₩15,000</span>
+                </li>
+                <li>
+                    <span>목살</span>
+                    <span>₩14,000</span>
+                </li>
+                <li>
+                    <span>항정살</span>
+                    <span>₩18,000</span>
+                </li>
+            </ul>
+
+            <h2>위치</h2>
+            <div class="map">
+                <img src="https://picsum.photos/400/300" alt="지도 이미지">
+            </div>
+        </div>
+
+        <!-- 오른쪽 -->
+        <div class="right">
+            <div class="info-box">
+                <p><strong>📍 주소</strong><br>서울시 강남구 어딘가</p>
+                <p><strong>📞 전화</strong><br>02-123-4567</p>
+                <p><strong>⏰ 영업시간</strong><br>11:00 ~ 22:00</p>
+                <div class="button-group">
+                    <button class="reserve-btn">예약하기</button>
+                    <button class="review-btn">후기작성</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock body %}

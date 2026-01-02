@@ -13,67 +13,74 @@
 {% comment %} body 작업은 여기서 하세요!! {% endcomment %}
 {% block body %}
 
-<body>
 
-<header class="r_header">
-    <h1 class="r_logo">🍽️ 미식 가이드</h1>
 
-    <div class="r_search-box">
-        <input type="text" placeholder="음식점 이름을 검색해보세요">
-        <button>검색</button>
+<div class='rest-header_bg'>
+    <div class='rest-header'>
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon"><img src='/static/images/restaurants/search_icon.png'></span>
+                <input type="text" placeholder="검색어를 입력하세요."/>
+            </div>
+            <button class="search-btn">검색</button>
+        </div>
     </div>
-</header>
+</div>
 
-<main class="r_container">
+<main class="rest_container">
 
     <!-- 카드 리스트 -->
-    <section class="r_card-grid">
+    <section class="rest_card-grid">
         <!-- 카드 20개 예시 -->
         <!-- 실제 Django에서는 for문으로 처리 -->
+        {% for r in list %}
         <!-- START -->
-        <div class="r_card">
-            <img src="https://picsum.photos/400/300?1">
-            <div class="r_card-body">
-                <h3>이가네</h3>
-                <p class="r_category">한식 · 회</p>
-                <p class="r_location">📍 서울 강남구</p>
-            </div>
+        <div class="rest_card" name='{{r.resno}}'><a href="/restaurants/resview/">
+            <img src="https://picsum.photos/400/300?{{r.resno}}">
+            <div class="rest_card-body">
+                <h3>{{r.res_name}}</h3>
+                <p class="rest_category">카테고리</p>
+                <p class="rest_location">📍 {{r.addr}}</p>
+                <p class="rest_desc">{{r.desc}}</p>
+            </div></a>
         </div>
-
-        <!-- 복사해서 총 20개 -->
-        <!-- 예시용으로 숫자만 변경 -->
+        {% endfor %}
         <!-- END -->
-
-        <!-- ↓↓↓ 예시로 빠르게 20개 생성 -->
-        <!-- 실제 사용 시 Django 템플릿으로 대체 -->
-        <script>
-            const grid = document.querySelector('.card-grid');
-            for(let i=2; i<=20; i++){
-                grid.innerHTML += `
-                <div class="r_card">
-                    <img src="https://picsum.photos/400/300?${i}">
-                    <div class="r_card-body">
-                        <h3>음식점 ${i}</h3>
-                        <p class="r_category">카테고리</p>
-                        <p class="r_location">📍 서울 어딘가</p>
-                    </div>
-                </div>`;
-            }
-        </script>
     </section>
 
-    <!-- 페이징 -->
-    <nav class="pagination">
-        <button class="page-btn">« 이전</button>
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn">3</button>
-        <button class="page-btn">4</button>
-        <button class="page-btn">다음 »</button>
-    </nav>
-
 </main>
-
-</body>
+<!-- 페이징 -->
+<div class="btnAreaList">
+    <div class="allPageMoving1">
+        <!-- 이전페이지 -->
+        {% if list.has_previous %}
+        <a href="/restaurants/reslist/?page=1" class="n"><img src="/static/images/common/btn_pre2.gif" alt="처음으로"/></a>
+        <a href="/restaurants/reslist/?page={{list.previous_page_number}}" class="pre"><img src="/static/images/common/btn_pre1.gif" alt="앞페이지로"/></a>
+        {% else %}
+        <a class="n"><img src="/static/images/common/btn_pre2.gif" alt="처음으로"/></a>
+        <a class="pre"><img src="/static/images/common/btn_pre1.gif" alt="앞페이지로"/></a>
+        {% endif %}
+        
+        <!-- 페이지넘버링-->
+        {% for p in list.paginator.page_range %}
+            {% if p >= list.number|add:'-3' and p <= list.number|add:'3' %}<!-- 앞뒤 페이지표시 -->
+                {% if p == page %}
+                <strong>{{p}}</strong>
+                {% else %}
+                <a href="/restaurants/reslist/?page={{p}}">{{p}}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+        <!-- 다음페이지-->
+        {% if list.has_next %}
+        <a href="/restaurants/reslist/?page={{list.next_page_number}}" class="next"><img src="/static/images/common/btn_next1.gif" alt="뒤페이지로"/></a>
+        <a href="/restaurants/reslist/?page={{list.paginator.num_pages}}" class="n"><img src="/static/images/common/btn_next2.gif" alt="마지막페이지로"/></a>
+        {% else %}
+        <a class="next"><img src="/static/images/common/btn_next1.gif" alt="뒤페이지로"/></a>
+        <a class="n"><img src="/static/images/common/btn_next2.gif" alt="마지막페이지로"/></a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock body %}
