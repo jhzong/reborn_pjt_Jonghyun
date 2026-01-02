@@ -12,5 +12,10 @@ def reslist(request):
     context={'list':list_qs,'page':page}
     return render(request,'restaurants/reslist.html',context)
 
-def resview(request):
-    return render(request,'restaurants/resview.html')
+# def reslist(request):
+#     return HttpResponse("reslist 페이지입니다.")
+
+def resview(request, resno):
+    qs = Restaurant.objects.get(resno=resno)
+    context={'view':qs}
+    return render(request,'restaurants/resview.html',context)

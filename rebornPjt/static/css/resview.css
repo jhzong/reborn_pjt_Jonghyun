@@ -33,7 +33,7 @@ body {
 .image-sub {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 .image-sub img {
@@ -141,4 +141,25 @@ body {
 
 .review-btn:hover {
     background: #1f5edb;
+}
+
+/* 뒤로가기 버튼 */
+.back-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0 20px;
+}
+
+.back-btn {
+    padding: 12px 40px;
+    font-size: 15px;
+    background: #e5e7eb;
+    color: #333;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #d1d5db;
 }
