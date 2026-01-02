@@ -109,7 +109,9 @@ from django.db import models
 
 #     def __str__(self):
 #         return f"{self.cno},{self.restaurant.res_nm},{self.ccontent},{self.rating},{self.date},{self.member.mem_id}"
-        
+
+
+## test용 table        
 class Restaurant(models.Model):
     resno=models.AutoField(primary_key=True)
     locno=models.IntegerField(default=0)
@@ -124,3 +126,23 @@ class Restaurant(models.Model):
     
     def __str__(self):
         return f"{self.resno},{self.res_name},{self.tel},{self.mem_id}"
+    
+class RestaurantOperTime(models.Model):
+    opno = models.AutoField(primary_key=True)
+    resno = models.ForeignKey(Restaurant, on_delete=models.SET_NULL, null=True, blank=True)
+    week = models.CharField(max_length=50, null=True)# 오픈 요일
+    open_time = models.TimeField(null=True)# 오픈 시간
+    close_time = models.TimeField(null=True)# 종료 시간
+
+    def __str__(self):
+        return f"{self.opno},{self.resno_id},{self.week},{self.open_time},{self.close_time}"
+
+
+class FoodMenu(models.Model):
+    fno = models.AutoField(primary_key=True)
+    resno = models.ForeignKey(Restaurant, on_delete=models.SET_NULL, null=True, blank=True)
+    price = models.IntegerField(default=0)# 음식 가격
+    fnm = models.CharField(max_length=100, null=True)# 음식 이름
+
+    def __str__(self):
+        return f"{self.fno},{self.fnm},{self.price}"
