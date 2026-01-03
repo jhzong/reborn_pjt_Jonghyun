@@ -36,20 +36,16 @@
             </p>
 
             <h2>메뉴</h2>
-            {% comment %} 메뉴 정보를 Django에서 전달받아 표시{% for menu in menus %} {% endcomment %}
+            <!-- 메뉴 정보를 Django에서 전달받아 표시 -->
             <ul class="menu-list">
+                {% for m in menu %}
                 <li>
-                    <span>삼겹살</span>
-                    <span>₩15,000</span>
+                    <span>{{m.fnm}}</span>
+                    <span>₩{{m.price}}</span>
                 </li>
-                <li>
-                    <span>목살</span>
-                    <span>₩14,000</span>
-                </li>
-                <li>
-                    <span>항정살</span>
-                    <span>₩18,000</span>
-                </li>
+                {% empty %}
+                <li>등록된 메뉴가 없습니다.</li>
+                {% endfor %}
             </ul>
 
             <h2>위치</h2>
@@ -63,7 +59,14 @@
             <div class="info-box">
                 <p><strong>📍 주소</strong><br>{{view.addr}}</p>
                 <p><strong>📞 전화</strong><br>{{view.tel}}</p>
-                <p><strong>⏰ 영업시간</strong><br>11:00 ~ 22:00</p>
+                <!-- 영업시간 정보를 Django에서 전달받아 표시 -->
+                <p><strong>⏰ 영업시간</strong><br>
+                    {% for op in oper_time %}
+                        {{ op.week }} : {{ op.open_time }} ~ {{ op.close_time }}<br>
+                    {% empty %}
+                        영업시간 정보가 없습니다.
+                    {% endfor %}
+                </p>
                 <div class="button-group">
                     <button class="reserve-btn">예약하기</button>
                     <button class="review-btn">후기작성</button>

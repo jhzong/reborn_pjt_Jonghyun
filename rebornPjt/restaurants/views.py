@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from restaurants.models import Restaurant
-from restaurants.models import RestaurantOperTime
-from restaurants.models import FoodMenu
+from restaurants.models import *
 from django.core.paginator import Paginator
 
 def reslist(request):
@@ -18,6 +16,12 @@ def reslist(request):
 #     return HttpResponse("reslist 페이지입니다.")
 
 def resview(request, resno):
+    # 식당정보
     qs = Restaurant.objects.get(resno=resno)
-    context={'view':qs}
+    # 운영시간 정보 (해당 식당 것만)
+    qs2 = RestaurantOperTime.objects.filter(resno=qs)
+    # 메뉴 정보 (해당 식당 것만)
+    qs3 = FoodMenu.objects.filter(resno=qs)
+
+    context={'view':qs, 'oper_time':qs2, 'menu':qs3}
     return render(request,'restaurants/resview.html',context)
