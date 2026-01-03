@@ -83,7 +83,7 @@ body {
 }
 
 /* 지도 */
-.map img {
+.map {
     width: 100%;
     border-radius: 8px;
     margin-top: 10px;
