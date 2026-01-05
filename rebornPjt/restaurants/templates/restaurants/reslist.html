@@ -8,6 +8,12 @@
 {% comment %} script 작업은 여기서 하세요!! {% endcomment %}
 {% block script %}
 <link rel='stylesheet' href="/static/js/restaurants.js">
+<script>
+    function searchBtn(){
+        alert('검색버튼 클릭됨');
+        searchFrm.submit();
+    }//searchBtn()
+</script>
 {% endblock script %}
 
 {% comment %} body 작업은 여기서 하세요!! {% endcomment %}
@@ -15,18 +21,19 @@
 
 
 
+<form action="/restaurants/reslist/" method="get" name="searchFrm">
 <div class='rest-header_bg'>
     <div class='rest-header'>
         <div class="search-container">
             <div class="search-box">
                 <span class="search-icon"><img src='/static/images/restaurants/search_icon.png'></span>
-                <input type="text" placeholder="검색어를 입력하세요."/>
+                <input type="text" name="search" placeholder="검색어를 입력하세요."/>
             </div>
-            <button class="search-btn">검색</button>
+            <button class="search-btn" onclick="searchBtn()">검색</button>
         </div>
     </div>
 </div>
-
+</form>
 <main class="rest_container">
 
     <!-- 카드 리스트 -->
