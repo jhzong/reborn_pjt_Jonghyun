@@ -4,7 +4,12 @@ from restaurants.models import *
 from django.core.paginator import Paginator
 
 def reslist(request):
-    qs = Restaurant.objects.all()
+    search=request.GET.get('search','')
+    if not search:
+        qs = Restaurant.objects.all()
+    else:
+        qs = Restaurant.objects.filter(res_name__contains=search)
+
     page=int(request.GET.get('page',1))# 없으면 default=1
     paginator=Paginator(qs,20)#20개씩 자르기
     list_qs=paginator.get_page(page)
