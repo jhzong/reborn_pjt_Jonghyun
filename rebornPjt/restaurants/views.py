@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from restaurants.models import *
 from django.core.paginator import Paginator
+from secret import api__func
 
 def reslist(request):
     search=request.GET.get('search','')
@@ -20,6 +21,8 @@ def reslist(request):
 # def reslist(request):
 #     return HttpResponse("reslist 페이지입니다.")
 
+app_key= api__func.kakao__API()
+
 def resview(request, resno):
     # 식당정보
     qs = Restaurant.objects.get(resno=resno)
@@ -28,5 +31,5 @@ def resview(request, resno):
     # 메뉴 정보 (해당 식당 것만)
     qs3 = FoodMenu.objects.filter(resno=qs)
 
-    context={'view':qs, 'oper_time':qs2, 'menu':qs3}
+    context={'view':qs, 'oper_time':qs2, 'menu':qs3, 'app_key':app_key}
     return render(request,'restaurants/resview.html',context)
